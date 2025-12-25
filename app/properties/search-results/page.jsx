@@ -8,14 +8,35 @@ import PropertyCard from '@/components/PropertyCard'
 import PropertySearchForm from '@/components/PropertySearchForm'
 import { FaArrowAltCircleLeft } from 'react-icons/fa'
 
-const SearchResultPage = async ({
-	searchParams: { location, propertyType },
-}) => {
+const SearchResultPage = async ({ searchParams }) => {
 	await connectDB()
 
+	const { location = '', propertyType = 'All' } = await searchParams
+	if(!location){
+		return (
+			<>
+				<section className='bg-blue-700 py-4'>
+                    <div className='max-w-7xl mx-auto px-4 flex flex-col items-start sm:px-6 lg:px-8'>
+                        <PropertySearchForm />
+                    </div>
+                </section>
+                <section className='px-4 py-6'>
+                    <div className='container-xl lg:container m-auto px-4 py-6'>
+                        <Link
+                            href='/properties'
+                            className='flex items-center text-blue-500 hover:underline mb-2'
+                        >
+                            <FaArrowAltCircleLeft className='mr-2 mb-1' /> Back To Properties
+                        </Link>
+                        <h1 className='text-2xl mb-4'>Search Results</h1>
+                        <p>No search results</p>
+                    </div>
+                </section>
+			</>
+		)
+	}
 	const locationPattern = new RegExp(location, 'i')
-
-	let query = {
+	const query = {
 		$or: [
 			{ name: locationPattern },
 			{ description: locationPattern },

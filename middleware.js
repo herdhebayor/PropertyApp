@@ -1,5 +1,6 @@
-//export {default} from "next-auth/middleware";// Protect all routes including localhost:3000/api/...
+import {default as middleware} from "next-auth/middleware";// Protect all routes including localhost:3000/api/...
+export {middleware}
 
-export default {
+export const config = {
   matcher: ["/properties/add","/profile","/properties/saved","/messages"],
 }; //Specify protected routes
