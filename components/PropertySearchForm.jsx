@@ -2,24 +2,41 @@
 
 'use client'
 
-import { useState } from 'react'
-import { useRouter } from 'next/navigation'
+import { useState , useEffect} from 'react'
+import { useRouter ,useSearchParams} from 'next/navigation'
 
 const PropertySearchForm = () => {
 	const [location, setLocation] = useState('')
 	const [propertyType, setPropertyType] = useState('All')
 
 	const router = useRouter()
+	const searchParams = useSearchParams()
+	useEffect(() => {
+		const loc = searchParams?.get('location') ?? ''
+		const type = searchParams?.get('propertyType') ?? 'All'
+		setLocation(loc)
+		setPropertyType(type)
+	}, [searchParams])
 
 	const handleSubmit = (e) => {
 		e.preventDefault()
 
-		if (location === '' && propertyType === '') {
+		
+		const loc = location.trim()
+		const isNoLocation = loc === ''
+		const isNoType = propertyType === '' || propertyType === 'All'
+
+		if (isNoLocation && isNoType) {
 			router.push('/properties')
-		} else {
-			const query = `?location=${location}&propertyType=${propertyType}`
-			router.push(`/properties/search-results${query}`)
+			return
 		}
+
+		const params = []
+		if (!isNoLocation) params.push(`location=${encodeURIComponent(loc)}`)
+		if (!isNoType)
+			params.push(`propertyType=${encodeURIComponent(propertyType)}`)
+		const query = params.length ? `?${params.join('&')}` : ''
+		router.push(`/properties/search-results${query}`)
 	}
 	return (
 		<form
@@ -44,7 +61,6 @@ const PropertySearchForm = () => {
 					Property Type
 				</label>
 				<select
-					type='text'
 					id='property-type'
 					className='w-full px-4 h-12 py-3 rounded-lg bg-white text-gray-800 focus:outline-none focus:ring focus:ring-blue-500'
 					value={propertyType}

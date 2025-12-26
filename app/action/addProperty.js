@@ -75,7 +75,7 @@ async function addProperty(formData) {
 		)
 		imgUrls.push(result.secure_url)
 	}
-	console.log(propertyData)
+	
     propertyData.images = imgUrls
 	const newProperty = new Property(propertyData)
 	await newProperty.save()

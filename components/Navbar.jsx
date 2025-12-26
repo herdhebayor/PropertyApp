@@ -1,6 +1,6 @@
 /** @format */
 'use client'
-import React, { useState, useEffect, use } from 'react'
+import React, { useState, useEffect } from 'react'
 import { usePathname } from 'next/navigation'
 import Link from 'next/link'
 import Image from 'next/image'
@@ -20,7 +20,7 @@ const Navbar = () => {
 	const { data: session } = useSession()
 	const profileImg = session?.user?.image
 	//session is going to be available when the user is logged in so we will replace session state with session
-	console.log(`session: ${session}`)
+	
 
 	useEffect(() => {
 		const setAuthProvider = async () => {
@@ -46,7 +46,7 @@ const Navbar = () => {
 							type='button'
 							id='mobile-dropdown-button'
 							className='relative md:hidden inline-flex items-center justify-center rounded-md p-2 text-gray-400
-                     hover:bg-gray-700 hover:text-white focus-outline-none focus:ring-2 focus:ring-inset focus:ring-white'
+                     hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white'
 							aria-controls='mobile-menu'
 							aria-expanded={isMobileMenuOpen ? 'true' : 'false'}
 							onClick={() => setIsMobileMenuOpen((prev) => !prev)}
@@ -73,10 +73,7 @@ const Navbar = () => {
 
 					<div className='flex flex-1 items-center justify-between'>
 						{/* Logo */}
-						<Link
-							className='flex shrink-0 items-center '
-							href='/'
-						>
+						<Link className='flex shrink-0 items-center ' href='/'>
 							<Image
 								className='w-10 h-10 rounded-full'
 								src={Logo}
@@ -92,8 +89,9 @@ const Navbar = () => {
 								<Link
 									href='/'
 									className={`${
-										pathname === '/' ? 'bg-black' : ''
-									} text-white hover:bg-gray-900 hover:text-white rounded-md px-3 py-2`}
+										pathname === '/' ? 'bg-black ' : ''
+									} text-gray-300 hover:text-white block rounded-md
+                     px-3 py-2 text-base font-medium`}
 								>
 									Home
 								</Link>

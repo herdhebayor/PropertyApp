@@ -15,13 +15,13 @@ const ProfilePage = async () => {
 	const sessionUser = await getSessionUser()
 	const { userId } = sessionUser
 
-	console.log('userid:', userId.toString())
+	
 
 	if (!userId) {
 		throw new Error('User ID is required')
 	}
 
-	console.log(userId)
+	
 	// const propertiesDoc = await Property.find({owner:userId}).lean()
 	// const properties = propertiesDoc.map(convertToSerializableObject)
 	// if(!Property){
