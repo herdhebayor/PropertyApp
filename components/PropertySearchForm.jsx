@@ -3,20 +3,20 @@
 'use client'
 
 import { useState , useEffect} from 'react'
-import { useRouter ,useSearchParams} from 'next/navigation'
+import { useRouter } from 'next/navigation'
 
-const PropertySearchForm = () => {
+const PropertySearchForm = ({
+	initialLocation = '',
+	initialType = "All"
+}) => {
 	const [location, setLocation] = useState('')
 	const [propertyType, setPropertyType] = useState('All')
 
 	const router = useRouter()
-	const searchParams = useSearchParams()
 	useEffect(() => {
-		const loc = searchParams?.get('location') ?? ''
-		const type = searchParams?.get('propertyType') ?? 'All'
-		setLocation(loc)
-		setPropertyType(type)
-	}, [searchParams])
+		setLocation(initialLocation ?? '')
+		setPropertyType(initialType ?? 'All')
+	}, [initialLocation, initialType])
 
 	const handleSubmit = (e) => {
 		e.preventDefault()
